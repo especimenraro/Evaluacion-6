@@ -52,4 +52,51 @@ function verificaContenido($campo,$valor,$data) {
 	} // FIN IF
 	else { return false;}
 } //FIN VERIFICA CONTENIDO
+
+function filtrar($campo,$valor,$data,$flag  = false) {
+	$pos_data=0;
+	if($flag) {
+		return $data;	
+	} // FIN IF
+	else {
+		foreach ($data as $pos=>$valor_data){
+				if($valor_data[$campo]==$valor) {
+					$data_tmp[$pos_data]=$valor_data;	
+					$pos_data++;
+				} // FIN IF	
+		}//FIN POR EACH	
+		return $data_tmp;
+	} // FIN ELSE
+}//FIN FUNCION FILTRAR
+
+function filtrarRango($campo,$valor_min,$valor_max,$data,$flag  = false) {
+	$pos_data=0;
+	if($flag) {
+		return $data;	
+	} // FIN IF
+	else {
+		foreach ($data as $pos=>$valor_data){
+				if(substr($valor_data[$campo],1)>=$valor_min && substr($valor_data[$campo],1)<=$valor_max ) {
+					$data_tmp[$pos_data]=$valor_data;	
+					$pos_data++;
+				} // FIN IF	
+		}//FIN POR EACH	
+		return $data_tmp;
+	} // FIN ELSE
+}//FIN FUNCION FILTRAR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
