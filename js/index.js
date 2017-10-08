@@ -140,12 +140,55 @@ $.ajax ({
 			} // FIN FOR
 		} //FIN IF
 		else {
-			html = '<div class="row anuncio" ><div class="col s12"><p>No se encontraron coincidencias</p></div></div>'
+			html = '<div class="row" id="cartelera_anuncio" ><div class="col s12" id="anuncio"><p>No se encontraron coincidencias</p></div></div>'
 			$(".divider").after(html);
 		} // FIN ELSE
 		} //FIN FUNCTION DONE
 		) //FIN DONE
 });//FIN SUBMIT
+
+$("#mostrarTodos").click(function (event) {
+	$("#cartelera_anuncio").remove();
+	event.preventDefault();
+	
+	var Ciudad;
+	var flagCiudad;
+	var Tipo;
+	var flagTipo;
+	var precioMin;
+	var precioMax;
+	var slider;
+	var html;
+	Ciudad = $("#selectCiudad").val();
+	Tipo = $("#selectTipo").val();
+	precioMin = 0;
+	precioMax = 100000;
+	flagCiudad = true;
+	flagTipo = true;
+	$.ajax ({
+			url: "./buscador.php",
+			//datatype: "json",
+			//cache: false,
+			//contentType: false,
+			//processData: false,
+			data:{Ciudad:Ciudad, Tipo: Tipo, flagTipo:flagTipo, flagCiudad:flagCiudad, precioMin: precioMin, precioMax: precioMax},
+			type: "POST"
+		}).done(function (data) {
+			if (data!="null") {
+				var listado = JSON.parse(data);
+				$(".divider").after('<div class="row" id="cartelera_anuncio" ><div class="col s12" id="anuncio"></div></div>');
+					for (i=0; i<listado.length;i++) {
+						html = '<div class="row" ><div class="col l5"><img src="./img/home.jpg" class="responsive-img"></div><div class="col l7"><p>Id:'+listado[i].Id+'</p><p>Dirección:'+listado[i].Direccion+'</p><p>Ciudad:'+listado[i].Ciudad+'</p><p>Teléfono:'+listado[i].Telefono+'</p><p>Código Postal:'+listado[i].Codigo_Postal+'</p><p>Tipo:'+listado[i].Tipo+'</p><p>Precio:'+listado[i].Precio+'</p></div></div>';
+						$("#anuncio").append(html);
+					} // FIN FOR
+		} //FIN IF
+		else {
+			html = '<div class="row" id="cartelera_anuncio" ><div class="col s12" id="anuncio"><p>No se encontraron coincidencias</p></div></div>'
+			$(".divider").after(html);
+		} // FIN ELSE
+		} //FIN FUNCTION DONE
+		) //FIN DONE
+}); // FIN CLICK MOSTRAR TODOS
 }); // FIN DOCUMENT READY
 
 
