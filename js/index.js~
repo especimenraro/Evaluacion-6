@@ -56,21 +56,95 @@ $(document).ready(function () {
 
 $.ajax ({
 			url: "./inicio.php",
-			datatype: "json",
-			cache: false,
-			contentType: false,
-			processData: false,
-			data:{},
+			//datatype: "json",
+			//cache: false,
+			//contentType: false,
+			//processData: false,
+			data:{campo:"Ciudad"},
 			type: "POST"
-		}).done(function (data) {
+		}).done(function (data,data2) {
 			$("#selectCiudad").css("display","block");
 			var listadoCiudades = JSON.parse(data);
 			for (i=0; i<listadoCiudades.length;i++) {
-				$("#selectCiudad").after("<option value="+listadoCiudades[i].Ciudad+">"+listadoCiudades[i].Ciudad+"</option>")
+				$("#selectCiudad").append('<option value="'+listadoCiudades[i].Ciudad+'">'+listadoCiudades[i].Ciudad+'</option>');
 			} // FIN FOR
 		} //FIN FUNCTION DONE
 		) //FIN DONE
 		
+		$.ajax ({
+			url: "./inicio.php",
+			//datatype: "json",
+			//cache: false,
+			//contentType: false,
+			//processData: false,
+			data:{campo:"Tipo"},
+			type: "POST"
+		}).done(function (data,data2) {
+			$("#selectTipo").css("display","block");
+			var listadoTipo = JSON.parse(data);
+			for (i=0; i<listadoTipo.length;i++) {
+				$("#selectTipo").append('<option value="'+listadoTipo[i].Tipo+'">'+listadoTipo[i].Tipo+'</option>');
+			} // FIN FOR
+		} //FIN FUNCTION DONE
+		) //FIN DONE
+		
+		
+$("#formulario").submit(function (event) {
+	$(".anuncio").remove();
+event.preventDefault();
+var listado;
+var Ciudad;
+var flagCiudad;
+var Tipo;
+var flagTipo;
+var precioMin;
+var precioMax;
+var slider;
+var html;
+if ($("#selectCiudad").val().length) { 
+	Ciudad = $("#selectCiudad").val();
+	flagCiudad = false;
+	} //FIN IF
+else {
+	flagCiudad = true;	
+	Ciudad = "xxx";
+	}
+	
+if ($("#selectTipo").val().length) { 
+	Tipo = $("#selectTipo").val();
+	flagTipo= false;
+	} //FIN IF
+else {
+	flagTipo = true;	
+	Tipo="xxx";
+	}
+	slider = $("#rangoPrecio").data("ionRangeSlider");
+precioMin = slider.old_from.toString();
+precioMax = slider.old_to.toString();
+
+$.ajax ({
+			url: "./buscador.php",
+			//datatype: "json",
+			//cache: false,
+			//contentType: false,
+			//processData: false,
+			data:{Ciudad:Ciudad, Tipo: Tipo, flagTipo:flagTipo, flagCiudad:flagCiudad, precioMin: precioMin, precioMax: precioMax},
+			type: "POST"
+		}).done(function (data) {
+			if (data!="null") {
+			var listado = JSON.parse(data);
+			for (i=0; i<listado.length;i++) {
+				html = '<div class="row anuncio" ><div class="col l5"><img src="./img/home.jpg" class="responsive-img"></div><div class="col l7"><p>Id:'+listado[i].Id+'</p><p>Dirección:'+listado[i].Direccion+'</p><p>Ciudad:'+listado[i].Ciudad+'</p><p>Teléfono:'+listado[i].Telefono+'</p><p>Código Postal:'+listado[i].Codigo_Postal+'</p><p>Tipo:'+listado[i].Tipo+'</p><p>Precio:'+listado[i].Precio+'</p></div></div>';
+				$(".divider").after(html);
+			} // FIN FOR
+		} //FIN IF
+		else {
+			html = '<div class="row anuncio" ><div class="col s12"><p>No se encontraron coincidencias</p></div></div>'
+			$(".divider").after(html);
+		} // FIN ELSE
+		} //FIN FUNCTION DONE
+		) //FIN DONE
+});//FIN SUBMIT
 }); // FIN DOCUMENT READY
 
 

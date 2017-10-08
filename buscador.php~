@@ -1,13 +1,21 @@
 <?php
 include "lib.php";
+
+ 
 $file = fopen("./data-1.json", "r");
 $data =json_decode(fread($file, filesize("./data-1.json")),true);
 fclose($file);
-$ciudad = filtrar("Ciudad","Orlando",$data,true );
-$tipo = filtrar("Tipo","Casa de Campo", filtrar("Ciudad","Houston",$data ));
-//$rangoPrecio = filtrarRango("Precio",)
-echo   substr($data[0]["Precio"],1)>"20000";     
+$Ciudad= $_POST["Ciudad"];
+$Tipo= $_POST["Tipo"];
+$precioMin= $_POST["precioMin"];
+$precioMax= $_POST["precioMax"];
+$flagCiudad = $_POST["flagCiudad"];
+ $flagTipo= $_POST["flagTipo"];
+//if($flagTipo=="false") {define("FLAGTIPO", false);}else {define("FLAGTIPO", true);}
+//if($flagCiudad=="false") {define("FLAGCIUDAD", false) ;}else {define("FLAGCIUDAD", true) ;;}
+$respuesta =  filtrarRango("Precio",$precioMin,$precioMax,filtrar("Tipo",$Tipo, filtrar("Ciudad",$Ciudad,$data, $flagCiudad ),$flagTipo));
 
-//echo json_encode($ciudades);
-
+//$respuesta =  filtrar("Ciudad",$Ciudad,$data, FLAGCIUDAD );
+echo json_encode($respuesta);
+//echo $respuesta;
 ?>

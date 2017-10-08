@@ -25,22 +25,18 @@
           <div class="tituloFiltros">
             <h5>Realiza una búsqueda personalizada</h5>
           </div>
-          <div class="filtroCiudad input-field">
-          <form>
+          <div class="filtroCiudad input-field">          
             <label for="selectCiudad">Ciudad:</label>
+            <br>
             <select name="ciudad" id="selectCiudad">
-              <option value="" selected>Elige una ciudad</option>
-              
-            </select>
-            </form>
+              <option value="" selected>Elige una ciudad</option>              
+            </select>            
           </div>
-          <div class="filtroTipo input-field">
-          
+          <div class="filtroTipo input-field">          
             <label for="selecTipo">Tipo:</label><br>
             <select name="tipo" id="selectTipo">
               <option value="" selected>Elige un tipo</option>
-            </select>
-            
+            </select>            
           </div>
           <div class="filtroPrecio">
             <label for="rangoPrecio">Precio:</label>
@@ -57,6 +53,17 @@
       <div class="tituloContenido card">
         <h5>Resultados de la búsqueda:</h5>
         <div class="divider"></div>
+        <div class="row">
+				        <div class="col l5">
+							             <img src="./img/home.jpg" class="responsive-img">
+							</div>
+									      
+				        <div class="col l7">
+				          <p>I am a very simple card. I am good at containing small bits of information.</p>
+				        </div>
+					        
+			    </div>
+			    
         <button type="button" name="todos" class="btn-flat waves-effect" id="mostrarTodos">Mostrar Todos</button>
       </div>
 

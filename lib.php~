@@ -53,8 +53,10 @@ function verificaContenido($campo,$valor,$data) {
 	else { return false;}
 } //FIN VERIFICA CONTENIDO
 
-function filtrar($campo,$valor,$data,$flag  = false) {
+function filtrar($campo,$valor,$data,$flag=false) {
 	$pos_data=0;
+	$data_tmp = json_decode("");
+	return $flag;
 	if($flag) {
 		return $data;	
 	} // FIN IF
@@ -71,17 +73,20 @@ function filtrar($campo,$valor,$data,$flag  = false) {
 
 function filtrarRango($campo,$valor_min,$valor_max,$data,$flag  = false) {
 	$pos_data=0;
+	$data_tmp = json_decode("");
 	if($flag) {
 		return $data;	
 	} // FIN IF
 	else {
 		foreach ($data as $pos=>$valor_data){
-				if($valor_data[$campo]>=$valor_min && $valor_data[$campo]<=$valor_max ) {
+			$data_precio = str_replace(",", "",  substr($valor_data[$campo],1));
+				if($data_precio>=$valor_min && $data_precio<=$valor_max ) {
 					$data_tmp[$pos_data]=$valor_data;	
 					$pos_data++;
 				} // FIN IF	
 		}//FIN POR EACH	
-		return $data_tmp;
+		if(count($data_tmp)) {
+		return $data_tmp;} else {return;}
 	} // FIN ELSE
 }//FIN FUNCION FILTRAR
 

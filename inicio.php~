@@ -1,6 +1,11 @@
 <?php
 include "lib.php";
-echo json_encode(obtieneData("Ciudad"));
+echo $_POST["campo"]
+if($_POST["campo"]=="Ciudad") {
+echo json_encode(obtieneData("Ciudad"));}
+
+if($_POST["campo"]=="Tipo") {
+echo json_encode(obtieneData("Tipo"));}
 
 
 ?>
